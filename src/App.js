@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
-function App() {
+const Box = ({ onPress, style }) => {
+  return <div style={style} onClick={onPress} className="box" />;
+};
+
+export default function App() {
+  const [checked, setChecked] = useState([]);
+  let array = Array.from({ length: 16 }, () => 0);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {array?.map((_, index) => (
+        <Box
+          key={index}
+          onPress={() => {
+            let temp = [...checked];
+            if (temp.length === 2) {
+              temp.shift();
+            }
+            if (!temp.includes(index)) setChecked([...temp, index]);
+          }}
+          style={{ backgroundColor: checked.includes(index) ? "red" : "blue" }}
+        />
+      ))}
     </div>
   );
 }
-
-export default App;
